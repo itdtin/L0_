@@ -1,4 +1,3 @@
-import random
 from time import sleep
 from logzero import logger
 from web3 import Web3
@@ -33,7 +32,9 @@ def trader_joe_swap(wallet, params):
             if srcTokenAddress == config.ETH:
                 balance_wei = w3.eth.get_balance(wallet.address)
                 src_symbol = "ETH"
+                swap_params = "swap_in"
             else:
+                swap_params = "swap_out"
                 token = w3.eth.contract(
                     address=srcTokenAddress,
                     abi=config.TOKEN_ABI,
@@ -52,7 +53,7 @@ def trader_joe_swap(wallet, params):
 
             # amount in
             src_token_price = get_price(src_symbol)
-            amount_in_wei = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 0, 0))
+            amount_in_wei = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
             amount_in_float = w3.fromWei(amount_in_wei, src_decimals)
             amount_in_usd = float(amount_in_float) * src_token_price
 
@@ -62,18 +63,22 @@ def trader_joe_swap(wallet, params):
             amount_out_min_wei = w3.toWei(amount_out_min_usd, dst_decimals)
             sleep(3)
 
+            # path params
+            path_params = None
+            for key, value in config.swap_params["trader_joe_swap"].items():
+                if src_symbol in key or dst_symbol in key:
+                    path_params = value[swap_params]
             if srcTokenAddress != config.ETH and approve_result == False:
                 logger.info("Approving ...")
                 approve_result = approve(w3, token, router_address, amount_in_wei, wallet)
                 sleep(3)
-
             logger.info("Swapping ...")
             gas_multiplier += 1
             deadline = max_int
             if srcTokenAddress == config.ETH:
                 swapParams = (
                     amount_out_min_wei,
-                    ([10], [1], [weth_address, dstTokenAddress]),
+                    (path_params["pairBinSteps"], path_params["versions"], [weth_address, dstTokenAddress]),
                     wallet.address,
                     deadline
                 )
@@ -83,7 +88,7 @@ def trader_joe_swap(wallet, params):
                 swapParams = (
                     amount_in_wei,
                     amount_out_min_wei,
-                    ([10], [2], [srcTokenAddress, weth_address]),
+                    (path_params["pairBinSteps"], path_params["versions"], [srcTokenAddress, weth_address]),
                     wallet.address,
                     deadline
                 )

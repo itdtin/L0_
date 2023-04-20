@@ -32,13 +32,16 @@ def call_function(
     w3: Web3,
     value=0,
     args=None,
-    gas_multiplicator=1,
+    gas_multiplicator=None,
     tryes=config.ATTEMTS_TO_NODE_REQUEST,
 ):
     if args is None:
         args = []
+    if gas_multiplicator is None:
+        gas_multiplicator = 1
     tryNum = 0
     while True:
+        gas_multiplicator += 1
         gas = w3.eth.estimate_gas(
             {
                 "to": Web3.toChecksumAddress(wallet.address),
@@ -61,9 +64,9 @@ def call_function(
             signed_txn = wallet.sign_transaction(transaction)
 
             txn_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-            sleep(random.randint(random.randint(5, 7), random.randint(8, 10)))
+            sleep(random.randint(random.randint(2, 3), random.randint(4, 4)))
             receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
-            sleep(random.randint(random.randint(5, 7), random.randint(8, 10)))
+            sleep(random.randint(random.randint(2, 3), random.randint(4, 4)))
 
             if receipt.status != 1:
                 raise Exception("Failed Tx")
@@ -77,7 +80,7 @@ def call_function(
             if tryNum > tryes:
                 logger.error(f"ERROR | while calling {function.fn_name}.\n{e}")
                 return False
-            sleep(15)
+            sleep(5)
 
 
 def send_raw_transaction(w3, signed_txn):
