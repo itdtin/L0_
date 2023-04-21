@@ -73,9 +73,6 @@ BSC_RPC: str = "https://bsc-dataseed4.binance.org"
 BSC_CHAIN_ID: int = 56
 BSC_LZ_CHAIN_ID: int = 102
 
-APTOS_RPC: str = ""
-APTOS_LZ_CHAIN_ID: int = 108
-
 #Protocols
 ARBITRUB_JOE_SWAP_CONTRACT: str = "0xb4315e873dbcf96ffd0acd8ea43f689d8c20fb30"
 PREFIX_TO_BYTES_ADDRESS: str = "0x000000000000000000000000"

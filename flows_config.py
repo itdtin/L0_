@@ -8,8 +8,8 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "BTCB",
-            "amountPercentMin": 50, # 50%
-            "amountPercentMax": 51,
+            "amountPercentMin": 70, # 70%
+            "amountPercentMax": 73,
         },
         {
             "script": "oft_bridge",
@@ -47,8 +47,8 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "JOE",
-            "amountPercentMin": 50, # 50%
-            "amountPercentMax": 51,
+            "amountPercentMin": 70,
+            "amountPercentMax": 75,
         },
         {
             "script": "joe_bridge",
@@ -85,8 +85,8 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "USDC",
-            "amountPercentMin": 50, # 50%
-            "amountPercentMax": 51,
+            "amountPercentMin": 70, # 50%
+            "amountPercentMax": 73,
         },
         {
             "script": "stargate_usdc_bridge",
