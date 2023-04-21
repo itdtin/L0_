@@ -6,7 +6,7 @@ from app.helpers.utils import call_function, get_random_amount, wait_balance_aft
 import config
 
 
-def oft_bridge(wallet, params, wait_balance=True):
+def oft_bridge(wallet, params):
     srcChain = config.NETWORKS.get(params.get("srcChain"))
     w3 = Web3(Web3.HTTPProvider(srcChain.get("RPC")))
     srcToken = srcChain.get(params.get("srcToken"))
@@ -23,7 +23,7 @@ def oft_bridge(wallet, params, wait_balance=True):
 
     tryNum = 0
     while True:
-        # try:
+        try:
             balance_wei = btcb_contract.functions.balanceOf(wallet.address).call()
             # amount in
             amount_in_wei = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
@@ -44,15 +44,15 @@ def oft_bridge(wallet, params, wait_balance=True):
             value = w3.fromWei(sendFee, config.ETH_DECIMALS)
             call_function(btcb_contract.functions.sendFrom, wallet, w3, value=value,
                     args=bridgeParams, gas_multiplicator=gas_multiplier)
-            if wait_balance:
+            if config.WAIT_BALANCE:
                 wait_balance_after_bridge(wallet.address, dstToken, dstChain)
             return True
 
-        # except Exception as e:
-        #     tryNum += 1
-        #     logger.error(f"ERROR | while bridging - attempt {tryNum}.\n{e}")
-        #     if tryNum > config.ATTEMTS_TO_NODE_REQUEST:
-        #         logger.error(f"ERROR | while bridging.\n{e}")
-        #         return False
-        #     sleep(10)
+        except Exception as e:
+            tryNum += 1
+            logger.error(f"ERROR | while bridging - attempt {tryNum}.\n{e}")
+            if tryNum > config.ATTEMTS_TO_NODE_REQUEST:
+                logger.error(f"ERROR | while bridging.\n{e}")
+                return False
+            sleep(10)
 

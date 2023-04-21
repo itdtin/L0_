@@ -63,10 +63,13 @@ def call_function(
             transaction = function(*args).buildTransaction(dict_transaction)
             signed_txn = wallet.sign_transaction(transaction)
 
+            wait_timings = config.WAIT_RECEIPT
             txn_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-            sleep(random.randint(random.randint(2, 3), random.randint(4, 4)))
+            if w3.eth.chain_id == config.POLYGON_CHAIN_ID:
+                wait_timings = config.WAIT_RECEIPT_POLYGON
+            sleep(random.randint(random.randint(*wait_timings[0]), random.randint(*wait_timings[1])))
             receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
-            sleep(random.randint(random.randint(2, 3), random.randint(4, 4)))
+            sleep(random.randint(random.randint(*wait_timings[0]), random.randint(*wait_timings[1])))
 
             if receipt.status != 1:
                 raise Exception("Failed Tx")

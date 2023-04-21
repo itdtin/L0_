@@ -6,7 +6,7 @@ from app.helpers.utils import approve, call_function, get_random_amount, wait_ba
 import config
 
 
-def joe_bridge(wallet, params, wait_balance=True):
+def joe_bridge(wallet, params):
     srcChain = config.NETWORKS.get(params.get("srcChain"))
     w3 = Web3(Web3.HTTPProvider(srcChain.get("RPC")))
     srcToken = srcChain.get(params.get("srcToken"))
@@ -63,7 +63,7 @@ def joe_bridge(wallet, params, wait_balance=True):
             value = w3.fromWei(sendFee, config.ETH_DECIMALS)
             call_function(oft_contract.functions.sendFrom, wallet, w3, value=value,
                     args=bridgeParams, gas_multiplicator=gas_multiplier)
-            if wait_balance:
+            if config.WAIT_BALANCE:
                 if params.get("dstChain") == "AVALANCHE":
                     dstToken = dstChain.get("JOE")
                 wait_balance_after_bridge(wallet.address, dstToken, dstChain)

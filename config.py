@@ -1,5 +1,5 @@
 import dotenv
-from app.helpers.abis import TOKEN_ABI, JOE_ROUTER_ABI
+from app.helpers.abis import TOKEN_ABI, JOE_ROUTER_ABI, STARGATE_ROUTER_ABI
 from eth_utils.units import units, decimal
 
 units.update(
@@ -20,7 +20,7 @@ to_run = {
         "swap": True,
         "bridge": True
     },
-    "OPTIMISM": {
+    "stargate": {
         "swap": True,
         "bridge": True
     },
@@ -28,6 +28,8 @@ to_run = {
 
 ATTEMTS_TO_NODE_REQUEST = 9
 ATTEMTS_TO_API_REQUEST = 9
+
+WAIT_BALANCE: bool = True
 BRIDGE_BALANCE_WAIT_TIME: int = 2000 # 2000 seconds
 
 SWAP_SLIPPAGE: int = 5
@@ -38,9 +40,13 @@ WAIT_BTW_WALLET_MAX: int = 0
 WAIT_BTW_PROJECT_MIN: int = 0
 WAIT_BTW_PROJECT_MAX: int = 0
 
+WAIT_RECEIPT = [(2,3), (4,5)]
+WAIT_RECEIPT_POLYGON = [(3,4), (5,6)]
+
 ZERO_ADDRESS: str = "0x0000000000000000000000000000000000000000"
 
 # Tokens
+ETH_INCH: str = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 ETH: str = "0x0000000000000000000000000000000000000000"
 ETH_DECIMALS: str = "ether"
 USDC_DECIMALS: str = "mwei"
@@ -56,7 +62,8 @@ OPTIMISM_CHAIN_ID: int = 10
 OPTIMISM_LZ_CHAIN_ID: int = 111
 
 POLYGON_RPC: str = "https://polygon-mainnet.g.alchemy.com/v2/ncSSy-j4i1T3hcN5hFCtEsyghpLCw_0p"
-POLYGON_CHAIN_ID: int = 56
+POLYGON_CHAIN_ID: int = 137
+POLYGON_LZ_CHAIN_ID: int = 109
 
 AVALANCHE_RPC: str = "https://avalanche-mainnet.infura.io/v3/ca0d7f3c70f84e22ab29e5a74b329a3a"
 AVALNCHE_CHAIN_ID: int = 43114
@@ -66,9 +73,16 @@ BSC_RPC: str = "https://bsc-dataseed4.binance.org"
 BSC_CHAIN_ID: int = 56
 BSC_LZ_CHAIN_ID: int = 102
 
+APTOS_RPC: str = ""
+APTOS_LZ_CHAIN_ID: int = 108
+
 #Protocols
 ARBITRUB_JOE_SWAP_CONTRACT: str = "0xb4315e873dbcf96ffd0acd8ea43f689d8c20fb30"
 PREFIX_TO_BYTES_ADDRESS: str = "0x000000000000000000000000"
+
+STARGATER_ROUTER_OPTI: str = "0xB0D502E938ed5f4df2E681fE6E419ff29631d62b"
+STARGATE_ROUTER_ARBI: str = "0x53Bf833A5d6c4ddA888F69c22C88C9f356a41614"
+STARGATE_ROUTER_POLYGON: str = "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd"
 
 NETWORKS = {
     "ARBITRUM": {
@@ -78,6 +92,7 @@ NETWORKS = {
         "RPC": ARBITRUM_RPC,
         "LZ_ADAPTER_PARAMS": "0x0002000000000000000000000000000000000000000000000000000000000003d0900000000000000000000000000000000000000000000000000000000000000000",
         "JOE_ROUTER_ADDRESS": ARBITRUB_JOE_SWAP_CONTRACT,
+        "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_ARBI,
         "USDC": {
             "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
             "decimals": USDC_DECIMALS
@@ -100,11 +115,13 @@ NETWORKS = {
         }
     },
     "POLYGON": {
-        "GAS_MULTIPLIER": 1,
+        "GAS_MULTIPLIER": 3,
         "CHAIN_ID": POLYGON_CHAIN_ID,
+        "LZ_CHAIN_ID": POLYGON_LZ_CHAIN_ID,
         "RPC": POLYGON_RPC,
+        "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_POLYGON,
         "USDC": {
-            "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+            "address": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
             "decimals": USDC_DECIMALS
         },
         "USDT": {
@@ -117,6 +134,7 @@ NETWORKS = {
         "CHAIN_ID": OPTIMISM_CHAIN_ID,
         "LZ_CHAIN_ID": OPTIMISM_LZ_CHAIN_ID,
         "RPC": OPTIMISM_RPC,
+        "STARGATE_ROUTER_ADDRESS": STARGATER_ROUTER_OPTI,
         "LZ_ADAPTER_PARAMS": "0x000200000000000000000000000000000000000000000000000000000000002dc6c00000000000000000000000000000000000000000000000000000000000000000",
         "USDC": {
             "address": "0x7f5c764cbc14f9669b88837ca1490cca17c31607",

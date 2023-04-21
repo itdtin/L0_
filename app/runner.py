@@ -40,7 +40,7 @@ class Runner:
         for project_, chain_actions in flows_config.PROJECTS.items():
             for project_params in chain_actions:
                 script_name = project_params['script']
-                project_name = f"{project_}_{project_params['script']}_{project_params['srcToken']}_{project_params['dstToken']}_{project_params['dstChain']}"
+                project_name = f"{project_}_{project_params['script']}_{project_params['srcToken']}_{project_params['srcChain']}_{project_params['dstToken']}_{project_params['dstChain']}"
                 key_ = None
                 for key in config.to_run[project_].keys():
                     if key in script_name:
