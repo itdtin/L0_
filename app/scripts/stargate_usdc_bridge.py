@@ -2,7 +2,7 @@ from time import sleep
 
 from web3 import Web3
 from logzero import logger
-from app.helpers.utils import approve, call_function, get_random_amount, max_int, wait_balance_after_bridge
+from app.helpers.utils import approve, call_function, get_random_amount, max_int, wait_balance_after_bridge, wait_balance_is_changed_token
 
 import config
 
@@ -23,6 +23,12 @@ def stargate_usdc_bridge(wallet, params):
     dst_lz_chain_id = dstChain.get("LZ_CHAIN_ID")
     dstToken = dstChain.get(params.get("dstToken"))
     dst_router_address = w3.toChecksumAddress(dstChain.get("STARGATE_ROUTER_ADDRESS"))
+    w3_dst = Web3(Web3.HTTPProvider(dstChain.get("RPC")))
+    dst_token_contract = w3_dst.eth.contract(
+        address=w3_dst.toChecksumAddress(dstToken["address"]),
+        abi=config.TOKEN_ABI,
+    )
+    dstBalanceBefore = dst_token_contract.functions.balanceOf(wallet.address).call()
 
     approve_result = False
     tryNum = 0
@@ -76,7 +82,7 @@ def stargate_usdc_bridge(wallet, params):
                 gas_multiplicator=gas_multiplier
             )
             if config.WAIT_BALANCE:
-                wait_balance_after_bridge(wallet.address, dstToken, dstChain)
+                wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
             return True
         except Exception as e:
             tryNum += 1

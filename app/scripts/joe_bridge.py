@@ -2,7 +2,7 @@ from time import sleep
 from logzero import logger
 from web3 import Web3
 
-from app.helpers.utils import approve, call_function, get_random_amount, wait_balance_after_bridge
+from app.helpers.utils import approve, call_function, get_random_amount, wait_balance_after_bridge, wait_balance_is_changed_token
 import config
 
 
@@ -15,6 +15,12 @@ def joe_bridge(wallet, params):
 
     dstChain = config.NETWORKS.get(params.get("dstChain"))
     dstToken = dstChain.get(params.get("dstToken"))
+    w3_dst = Web3(Web3.HTTPProvider(dstChain.get("RPC")))
+    dst_token_contract = w3_dst.eth.contract(
+        address=w3_dst.toChecksumAddress(dstToken["address"]),
+        abi=config.TOKEN_ABI,
+    )
+    dstBalanceBefore = dst_token_contract.functions.balanceOf(wallet.address).call()
 
     gas_multiplier = srcChain.get("GAS_MULTIPLIER")
     oft_contract = w3.eth.contract(
@@ -64,9 +70,7 @@ def joe_bridge(wallet, params):
             call_function(oft_contract.functions.sendFrom, wallet, w3, value=value,
                     args=bridgeParams, gas_multiplicator=gas_multiplier)
             if config.WAIT_BALANCE:
-                if params.get("dstChain") == "AVALANCHE":
-                    dstToken = dstChain.get("JOE")
-                wait_balance_after_bridge(wallet.address, dstToken, dstChain)
+                wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
             return True
 
         except Exception as e:

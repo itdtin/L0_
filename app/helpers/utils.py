@@ -167,7 +167,7 @@ def wait_balance_is_changed_token(
                 raise TimeoutError
         return balance_after
 
-def wait_balance_after_bridge(wallet_address, dstToken, dstChain):
+def wait_balance_after_bridge(wallet_address, dstToken, dstChain, balance):
     w3_dst = Web3(Web3.HTTPProvider(dstChain.get("RPC")))
     if dstToken["address"] == config.ETH:
         balanceBefore = w3_dst.eth.get_balance(wallet_address)
