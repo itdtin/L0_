@@ -53,7 +53,15 @@ def trader_joe_swap(wallet, params):
 
             # amount in
             src_token_price = get_price(src_symbol)
-            amount_in_wei = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
+            if params.get("srcToken") == "JOE":
+                random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
+                decimals_balance = w3.fromWei(random_amount, srcToken.get("decimals"))
+                str_balance_splitted = str(decimals_balance).split(".")
+                formatted_decimals = str_balance_splitted[1] if len(str_balance_splitted[1]) == 18 else str_balance_splitted[1] + "0" * (18 - len(str_balance_splitted[1]))
+                amount_to_bridge_8_decimals = float(f"{str_balance_splitted[0]}.{formatted_decimals[:8]}")
+                amount_in_wei = w3.toWei(amount_to_bridge_8_decimals, config.ETH_DECIMALS)
+            else:
+                amount_in_wei = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
             amount_in_float = w3.fromWei(amount_in_wei, src_decimals)
             amount_in_usd = float(amount_in_float) * src_token_price
 
