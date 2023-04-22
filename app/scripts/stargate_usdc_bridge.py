@@ -44,21 +44,8 @@ def stargate_usdc_bridge(wallet, params):
 
             if not approve_result:
                 approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
-            # eth_balance = w3.eth.getBalance(wallet.address)
-            # try:
-            #     feeForWithWholeETHDrop = src_router.functions.quoteLayerZeroFee(
-            #         dst_lz_chain_id, 1, dst_router_address, "0x", (0, eth_balance, wallet.address)).call()
-            # except Exception as e:
-            #     logger.error(f"To low ETH balance to drop ...{e}")
-            #     feeForWithWholeETHDrop = src_router.functions.quoteLayerZeroFee(
-            #         dst_lz_chain_id, 1, dst_router_address, "0x", (0, 0, wallet.address)).call()
 
-            # gas_ = int(gas * w3.eth.gas_price)
-            # fee = w3.fromWei(feeForWithWholeETHDrop[0] - eth_balance + gas_, config.ETH_DECIMALS)
-            # eth_balance_to_drop_wei = eth_balance - w3.toWei(float(fee) * config.stg_nominator, config.ETH_DECIMALS)
-            # if eth_balance_to_drop_wei > 0:
-            #     value = float(fee) + float(w3.fromWei(eth_balance_to_drop_wei, config.ETH_DECIMALS))
-            gas_on_destination_amount = params.get("gasOnDestination")
+            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
             if gas_on_destination_amount > 0:
                 gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
             stargate_fee = src_router.functions.quoteLayerZeroFee(

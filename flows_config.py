@@ -19,7 +19,8 @@ PROJECTS = {
             "dstToken": "BTCB",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestination": 0.001
+            "gasOnDestinationMin": 0.001,
+            "gasOnDestinationMax": 0.0015
         },
         {
             "script": "oft_bridge",
@@ -29,7 +30,8 @@ PROJECTS = {
             "dstToken": "BTCB",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestination": 0
+            "gasOnDestinationMin": 0,
+            "gasOnDestinationMax": 0
         },
         {
             "script": "trader_joe_swap",
@@ -60,7 +62,8 @@ PROJECTS = {
             "dstToken": "JOE",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestination": 0.01
+            "gasOnDestinationMin": 0.01,
+            "gasOnDestinationMax": 0.015
         },
         {
             "script": "joe_bridge",
@@ -70,7 +73,8 @@ PROJECTS = {
             "dstToken": "JOE",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestination": 0
+            "gasOnDestinationMin": 0,
+            "gasOnDestinationMax": 0
         },
         {
             "script": "trader_joe_swap",
@@ -100,7 +104,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestination": 5
+            "gasOnDestinationMin": 5,
+            "gasOnDestinationMax": 7
         },
         {
             "script": "stargate_usdc_bridge",
@@ -110,7 +115,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestination": 0.001
+            "gasOnDestinationMin": 0.001,
+            "gasOnDestinationMax": 0.0015
         },
         {
             "script": "inch_swap",

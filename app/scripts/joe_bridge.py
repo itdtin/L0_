@@ -55,7 +55,7 @@ def joe_bridge(wallet, params):
 
             logger.info("Bridging ...")
             sliced_wallet_address = wallet.address[2:]
-            gas_on_destination_amount = params.get("gasOnDestination")
+            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
             default_adapter_params = srcChain["LZ_ADAPTER_PARAMS"]
             if gas_on_destination_amount > 0:
                 gas_on_dst_wei = hex(w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS))[2:]
