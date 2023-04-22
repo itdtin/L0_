@@ -2,7 +2,7 @@ from time import sleep
 
 from web3 import Web3
 from logzero import logger
-from app.helpers.utils import approve, call_function, get_random_amount, max_int, wait_balance_after_bridge, wait_balance_is_changed_token
+from app.helpers.utils import approve, call_function, get_random_amount, wait_balance_is_changed_token
 
 import config
 
@@ -58,8 +58,11 @@ def stargate_usdc_bridge(wallet, params):
             # eth_balance_to_drop_wei = eth_balance - w3.toWei(float(fee) * config.stg_nominator, config.ETH_DECIMALS)
             # if eth_balance_to_drop_wei > 0:
             #     value = float(fee) + float(w3.fromWei(eth_balance_to_drop_wei, config.ETH_DECIMALS))
+            gas_on_destination_amount = params.get("gasOnDestination")
+            if gas_on_destination_amount > 0:
+                gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
             stargate_fee = src_router.functions.quoteLayerZeroFee(
-                    dst_lz_chain_id, 1, dst_router_address, "0x", (0, 0, wallet.address)).call()[0]
+                    dst_lz_chain_id, 1, dst_router_address, "0x", (0, gas_on_dst_wei, wallet.address)).call()[0]
 
             swapObj = {
                 '_dstChainId': dst_lz_chain_id,
@@ -68,7 +71,7 @@ def stargate_usdc_bridge(wallet, params):
                 "_refundAddress": w3.toChecksumAddress(wallet.address),
                 "_amountLD": random_amount,
                 "_minAmountLD": int(random_amount * 0.95),
-                "_lzTxParams": (0, 0, w3.toChecksumAddress(wallet.address)),
+                "_lzTxParams": (0, gas_on_dst_wei, w3.toChecksumAddress(wallet.address)),
                 "_to": w3.toChecksumAddress(wallet.address),
                 "_payload": "0x"
             }

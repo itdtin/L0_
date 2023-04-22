@@ -1,8 +1,9 @@
+import struct
 from time import sleep
 from logzero import logger
 from web3 import Web3
 
-from app.helpers.utils import call_function, get_random_amount, wait_balance_after_bridge, wait_balance_is_changed_token
+from app.helpers.utils import call_function, get_random_amount, wait_balance_is_changed_token
 import config
 
 
@@ -26,7 +27,6 @@ def oft_bridge(wallet, params):
         address=srcTokenAddress,
         abi=config.TOKEN_ABI,
     )
-
     tryNum = 0
     while True:
         try:
@@ -36,7 +36,13 @@ def oft_bridge(wallet, params):
 
             logger.info("Bridging ...")
             sliced_wallet_address = wallet.address[2:]
-            adapter_params = srcChain["LZ_ADAPTER_PARAMS"] + sliced_wallet_address
+            gas_on_destination_amount = params.get("gasOnDestination")
+            default_adapter_params = srcChain["LZ_ADAPTER_PARAMS"]
+            if gas_on_destination_amount > 0:
+                gas_on_dst_wei = hex(w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS))[2:]
+                adapter_params = default_adapter_params[:len(default_adapter_params) - len(gas_on_dst_wei)] + gas_on_dst_wei + sliced_wallet_address
+            else:
+                adapter_params = default_adapter_params + sliced_wallet_address
             bridgeParams = (
                 wallet.address,
                 dstChain.get("LZ_CHAIN_ID"),

@@ -37,7 +37,9 @@ class Runner:
 
     def run_projects_in_order(self, wallet):
         result = True
-        for project_, chain_actions in flows_config.PROJECTS.items():
+        project_keys = list(flows_config.PROJECTS.keys())
+        for project_ in project_keys:
+            chain_actions = flows_config.PROJECTS[project_]
             for project_params in chain_actions:
                 script_name = project_params['script']
                 project_name = f"{project_}_{project_params['script']}_{project_params['srcToken']}_{project_params['srcChain']}_{project_params['dstToken']}_{project_params['dstChain']}"
