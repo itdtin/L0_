@@ -38,6 +38,7 @@ class Runner:
     def run_projects_in_order(self, wallet):
         result = True
         project_keys = list(flows_config.PROJECTS.keys())
+        random.shuffle(project_keys)
         for project_ in project_keys:
             chain_actions = flows_config.PROJECTS[project_]
             for project_params in chain_actions:
