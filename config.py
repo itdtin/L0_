@@ -24,10 +24,6 @@ to_run = {
         "swap": True,
         "bridge": True
     },
-    "stargate2": {
-        "swap": True,
-        "bridge": True
-    },
 }
 
 ATTEMTS_TO_NODE_REQUEST = 9
@@ -177,7 +173,7 @@ NETWORKS = {
         }
     },
     "AVALANCHE": {
-        "GAS_MULTIPLIER": 4,
+        "GAS_MULTIPLIER": 5,
         "CHAIN_ID": AVALNCHE_CHAIN_ID,
         "LZ_CHAIN_ID": AVALANCHE_LZ_CHAIN_ID,
         "RPC": AVALANCHE_RPC,
@@ -201,7 +197,7 @@ NETWORKS = {
         }
     },
     "FANTOM": {
-        "GAS_MULTIPLIER": 5,
+        "GAS_MULTIPLIER": 6,
         "CHAIN_ID": FANTOM_CHAIN_ID,
         "LZ_CHAIN_ID": FANTOM_LZ_CHAIN_ID,
         "RPC": FANTOM_RPC,
