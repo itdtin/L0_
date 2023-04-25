@@ -50,7 +50,7 @@ class Runner:
                         key_ = key
                 if config.to_run[project_][key_]:
                     if result:
-                        print(f"RUNNUNIG {project_name} ...")
+                        logger.info(f"RUNNUNIG {project_name} ...")
                         result = self.run_project(wallet, project_params)
                         self.make_pause_btw_projects()
 
