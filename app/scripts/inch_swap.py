@@ -43,29 +43,29 @@ def inch_swap(wallet, params):
 
         swap_url_api = f'https://api.1inch.io/v4.0/{srcChainId}/swap?fromTokenAddress={srcTokenAddress}&toTokenAddress={dstTokenAddress}' \
                        f'&amount={amount_in_wei}&fromAddress={wallet.address}&slippage={slippage}'
-        # try:
-        json_data = get(swap_url_api)
-        tx = json_data.json().get('tx')
-        tx['nonce'] = w3.eth.getTransactionCount(wallet.address)
-        tx['to'] = w3.toChecksumAddress(tx['to'])
-        tx['gasPrice'] = int(tx['gasPrice'])
-        tx['value'] = int(tx['value'])
-        signed_tx = wallet.sign_transaction(tx)
-        receipt = send_raw_transaction(w3, signed_tx)
-        logger.info(f'INFO | 1inch | Successfully swaped {srcTokenAddress} => {dstTokenAddress}')
-        sleep(random.randint(random.randint(5, 6), random.randint(7, 8)))
-        return receipt
-        # except Exception as e:
-        #     tryNum += 1
-        #     slippage += 1
-        #     logger.error((f"ERROR | 1inch | Swap attempt {tryNum}. Can't swap {srcTokenAddress} => {dstTokenAddress}"))
-        #     logger.error(f"Tryed with url {swap_url_api}")
-        #     if tryNum > config.ATTEMTS_TO_API_REQUEST:
-        #         if "'NoneType' object does not support item assignment" in e.args[0]:
-        #             e = "Can't get estimated data from 1inch"
-        #         logger.error((f"ERROR | 1inch | Can't swap {srcTokenAddress} => {dstTokenAddress}\n {e}"))
-        #         return False
-        #     sleep(10)
+        try:
+            json_data = get(swap_url_api)
+            tx = json_data.json().get('tx')
+            tx['nonce'] = w3.eth.getTransactionCount(wallet.address)
+            tx['to'] = w3.toChecksumAddress(tx['to'])
+            tx['gasPrice'] = int(tx['gasPrice'])
+            tx['value'] = int(tx['value'])
+            signed_tx = wallet.sign_transaction(tx)
+            receipt = send_raw_transaction(w3, signed_tx)
+            logger.info(f'INFO | 1inch | Successfully swaped {srcTokenAddress} => {dstTokenAddress}')
+            sleep(random.randint(random.randint(5, 6), random.randint(7, 8)))
+            return receipt
+        except Exception as e:
+            tryNum += 1
+            slippage += 1
+            logger.error((f"ERROR | 1inch | Swap attempt {tryNum}. Can't swap {srcTokenAddress} => {dstTokenAddress}"))
+            logger.error(f"Tryed with url {swap_url_api}")
+            if tryNum > config.ATTEMTS_TO_API_REQUEST:
+                if "'NoneType' object does not support item assignment" in e.args[0]:
+                    e = "Can't get estimated data from 1inch"
+                logger.error((f"ERROR | 1inch | Can't swap {srcTokenAddress} => {dstTokenAddress}\n {e}"))
+                return False
+            sleep(10)
 
 def approve(w3, wallet, srcAddress, chainId, amountIn):
     logger.info("INFO | 1inch | Calling approve ...")
