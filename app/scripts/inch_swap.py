@@ -60,7 +60,7 @@ def inch_swap(wallet, params):
             tryNum += 1
             slippage += 1
             logger.error((f"ERROR | 1inch | Swap attempt {tryNum}. Can't swap {srcTokenAddress} => {dstTokenAddress}"))
-            logger.error(f"Tryed with url {swap_url_api} and tx \n {tx}")
+            logger.error(f"Tryed with url {swap_url_api}")
             if tryNum > config.ATTEMTS_TO_API_REQUEST:
                 if "'NoneType' object does not support item assignment" in e.args[0]:
                     e = "Can't get estimated data from 1inch"
