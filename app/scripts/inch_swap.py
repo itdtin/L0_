@@ -21,6 +21,9 @@ def inch_swap(wallet, params):
 
     logger.info("INFO | 1inch | Swapping ...")
     approved = False
+    tryNum = 0
+    slippage = config.SWAP_SLIPPAGE
+
     while True:
 
         if srcTokenAddress == config.ETH or srcTokenAddress == config.ETH_INCH:
@@ -34,8 +37,6 @@ def inch_swap(wallet, params):
 
         amount_in_wei = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
 
-        tryNum = 0
-        slippage = config.SWAP_SLIPPAGE
 
         if srcTokenAddress != config.ETH and srcTokenAddress.lower() != config.ETH_INCH.lower() and approved == False:
             approved = approve(w3, wallet, srcTokenAddress, srcChainId, amount_in_wei)
