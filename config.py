@@ -10,7 +10,7 @@ units.update(
 )
 
 dotenv.load_dotenv()
-
+to_random_run = ["bitcoinBridge", "traderjoe", "stargate"]
 to_run = {
     "bitcoinBridge": {
         "swap": True,
@@ -21,6 +21,10 @@ to_run = {
         "bridge": True
     },
     "stargate": {
+        "swap": True,
+        "bridge": True
+    },
+    "stargate2": {
         "swap": True,
         "bridge": True
     },

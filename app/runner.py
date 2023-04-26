@@ -37,8 +37,14 @@ class Runner:
 
     def run_projects_in_order(self, wallet):
         result = True
-        project_keys = list(flows_config.PROJECTS.keys())
+        # project_keys = list(flows_config.PROJECTS.keys())
+        project_keys = config.to_random_run
         random.shuffle(project_keys)
+        # stargate2 to be runned after stargate
+        stargate_index = project_keys.index("stargate")
+        stargate2_index = stargate_index + 1
+        project_keys.insert(stargate2_index, "stargate2")
+
         for project_ in project_keys:
             chain_actions = flows_config.PROJECTS[project_]
             for project_params in chain_actions:
