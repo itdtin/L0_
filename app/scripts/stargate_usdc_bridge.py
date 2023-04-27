@@ -48,6 +48,8 @@ def stargate_usdc_bridge(wallet, params):
             gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
             if gas_on_destination_amount > 0:
                 gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
+            else:
+                gas_on_dst_wei = 0
             stargate_fee = src_router.functions.quoteLayerZeroFee(
                     dst_lz_chain_id, 1, dst_router_address, "0x", (0, gas_on_dst_wei, wallet.address)).call()[0]
 
