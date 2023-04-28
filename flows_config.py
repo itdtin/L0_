@@ -8,8 +8,8 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "BTCB",
-            "amountPercentMin": 70, # 70%
-            "amountPercentMax": 73,
+            "amountPercentMin": 45, # 70%
+            "amountPercentMax": 56,
         },
         {
             "script": "oft_bridge",
@@ -19,8 +19,8 @@ PROJECTS = {
             "dstToken": "BTCB",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.001,
-            "gasOnDestinationMax": 0.0015
+            "gasOnDestinationMin": 0.002,
+            "gasOnDestinationMax": 0.0025
         },
         {
             "script": "oft_bridge",
@@ -51,8 +51,8 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "JOE",
-            "amountPercentMin": 70,
-            "amountPercentMax": 75,
+            "amountPercentMin": 40,
+            "amountPercentMax": 65,
         },
         {
             "script": "joe_bridge",
@@ -93,8 +93,8 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "USDC",
-            "amountPercentMin": 70, # 50%
-            "amountPercentMax": 73,
+            "amountPercentMin": 75, # 50%
+            "amountPercentMax": 83,
         },
         {
             "script": "stargate_usdc_bridge",
@@ -104,8 +104,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 5,
-            "gasOnDestinationMax": 7
+            "gasOnDestinationMin": 9,
+            "gasOnDestinationMax": 10
         },
         {
             "script": "stargate_usdc_bridge",
@@ -115,8 +115,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.001,
-            "gasOnDestinationMax": 0.0015
+            "gasOnDestinationMin": 0.002,
+            "gasOnDestinationMax": 0.0025
         },
         {
             "script": "inch_swap",
@@ -135,7 +135,7 @@ PROJECTS = {
             "dstChain": "OPTIMISM",
             "srcToken": "ETH",
             "dstToken": "USDC",
-            "amountPercentMin": 75, # 50%
+            "amountPercentMin": 70, # 50%
             "amountPercentMax": 80,
         },
         {
@@ -146,8 +146,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.34,
-            "gasOnDestinationMax": 0.36
+            "gasOnDestinationMin": 0.45,
+            "gasOnDestinationMax": 0.5
         },
         {
             "script": "stargate_usdc_bridge",
@@ -157,8 +157,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 9.5,
-            "gasOnDestinationMax": 10
+            "gasOnDestinationMin": 7,
+            "gasOnDestinationMax": 9
         },
         {
             "script": "stargate_usdc_bridge",
@@ -168,8 +168,9 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.001,
-            "gasOnDestinationMax": 0.0013
+            "gasOnDestinationMin": 0,
+            "gasOnDestinationMax": 0
+
         },
         {
             "script": "inch_swap",
