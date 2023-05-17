@@ -1,11 +1,11 @@
-# L0_worker
-# Developed by [BenderRoyman](https://t.me/BenderRoyman)
+# LayerZero bridges
+## Developed by [BenderRoyman](https://t.me/BenderRoyman)
 
-# Prerequisites:
-  Python 3.9
-  wallets.txt in the root with primary keys line by line
+## Prerequisites:
+  1. Python 3.9
+  2. wallets.txt in the root with primary keys line by line
 
-# Install
+## Install
   Be sure that the "python" command runs python 3.9
   1. Create virtual environment: python -m venv venv
   2. Activate venv: source venv/bin/activate - unix, venv\scripts\activate - windows
