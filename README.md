@@ -1,5 +1,5 @@
 # L0_worker
-# Developed by: https://t.me/BenderRoyman
+# Developed by: - [Roman](https://t.me/BenderRoyman)
 
 # Prerequisites:
   Python 3.9
@@ -11,9 +11,9 @@
   2. Activate venv: source venv/bin/activate - unix, venv\scripts\activate - windows
   3. Install dependencies: pip install -r requirements.txt
 
-# Configure run:
+## Configure run:
   1. config.py - common config, there are several parts which you would need to configure:
-    a) select run:
+    - select run:
       to_run = {
       "bitcoinBridge": {
           "swap": True,
@@ -21,15 +21,15 @@
       },
       ...
     }  - if you would like to not run any bridge or swap - you can set False,
-    b) Wait time between wallets:
+    - Wait time between wallets:
       WAIT_BTW_WALLET_MIN: int = 20
       WAIT_BTW_WALLET_MAX: int = 30
       Final wait time between wallets will be random amount in seconds in range from WAIT_BTW_WALLET_MIN to WAIT_BTW_WALLET_MAX
-    c) Wait time between run scripts bridge or swap:
+    - Wait time between run scripts bridge or swap:
       WAIT_BTW_PROJECT_MIN: int = 30
       WAIT_BTW_PROJECT_MAX: int = 40
       Final wait time between run scripts will be random amount in seconds in range from WAIT_BTW_WALLET_MIN to WAIT_BTW_WALLET_MAX
-    d) Wait time balance on the destination chain:
+    - Wait time balance on the destination chain:
       BRIDGE_BALANCE_WAIT_TIME: int = 3600 # 3600 seconds
       Script will wait receiving funds on the destination chain
   2. flows_config.py - there are configs for each flow and you would want to change something, look at the exapmple below:
