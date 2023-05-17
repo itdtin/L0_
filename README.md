@@ -1,5 +1,5 @@
 # L0_worker
-# Developed by: - [Roman](https://t.me/BenderRoyman)
+# Developed by [BenderRoyman](https://t.me/BenderRoyman)
 
 # Prerequisites:
   Python 3.9
@@ -13,7 +13,7 @@
 
 ## Configure run:
   1. config.py - common config, there are several parts which you would need to configure:
-    - select run:
+      [select run]:
       to_run = {
       "bitcoinBridge": {
           "swap": True,
@@ -32,7 +32,7 @@
     - Wait time balance on the destination chain:
       BRIDGE_BALANCE_WAIT_TIME: int = 3600 # 3600 seconds
       Script will wait receiving funds on the destination chain
-  2. flows_config.py - there are configs for each flow and you would want to change something, look at the exapmple below:
+  1. flows_config.py - there are configs for each flow and you would want to change something, look at the exapmple below:
 
     PROJECTS = {
       "bitcoinBridge": [
