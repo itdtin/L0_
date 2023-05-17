@@ -30,7 +30,7 @@
     - Wait time between run scripts bridge or swap:
       WAIT_BTW_PROJECT_MIN: int = 30
       WAIT_BTW_PROJECT_MAX: int = 40
-      Final wait time between run scripts will be random amount in seconds in range from WAIT_BTW_WALLET_MIN to WAIT_BTW_WALLET_MAX
+      Final wait time between run scripts will be random amount in seconds in range from WAIT_BTW_PROJECT_MIN to WAIT_BTW_PROJECT_MAX
 
     - Wait time balance on the destination chain:
       BRIDGE_BALANCE_WAIT_TIME: int = 3600 # 3600 seconds
