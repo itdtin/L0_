@@ -65,8 +65,7 @@ def call_function(
 
             wait_timings = config.WAIT_RECEIPT
             txn_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-            if w3.eth.chain_id == config.POLYGON_CHAIN_ID:
-                wait_timings = config.WAIT_RECEIPT_POLYGON
+
             sleep(random.randint(random.randint(*wait_timings[0]), random.randint(*wait_timings[1])))
             receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
             sleep(random.randint(random.randint(*wait_timings[0]), random.randint(*wait_timings[1])))

@@ -8,7 +8,7 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "BTCB",
-            "amountPercentMin": 45, # 70%
+            "amountPercentMin": 45,
             "amountPercentMax": 56,
         },
         {
