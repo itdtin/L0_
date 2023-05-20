@@ -23,19 +23,15 @@ to_run = {
     "stargate": {
         "swap": True,
         "bridge": True
-    },
-    "stargate2": {
-        "swap": True,
-        "bridge": True
-    },
+    }
 }
 
 # Wait
-WAIT_BTW_WALLET_MIN: int = 20
-WAIT_BTW_WALLET_MAX: int = 30
+WAIT_BTW_WALLET_MIN: int = 1
+WAIT_BTW_WALLET_MAX: int = 2
 
-WAIT_BTW_PROJECT_MIN: int = 30
-WAIT_BTW_PROJECT_MAX: int = 40
+WAIT_BTW_PROJECT_MIN: int = 1
+WAIT_BTW_PROJECT_MAX: int = 2
 
 WAIT_RECEIPT = [(4,5), (7,8)]
 

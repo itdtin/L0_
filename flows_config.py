@@ -93,50 +93,19 @@ PROJECTS = {
             "dstChain": "ARBITRUM",
             "srcToken": "ETH",
             "dstToken": "USDC",
-            "amountPercentMin": 75, # 50%
+            "amountPercentMin": 75, # 75%
             "amountPercentMax": 83,
         },
         {
             "script": "stargate_usdc_bridge",
             "srcChain": "ARBITRUM",
-            "dstChain": "POLYGON",
-            "srcToken": "USDC",
-            "dstToken": "USDC",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-            "gasOnDestinationMin": 9,
-            "gasOnDestinationMax": 10
-        },
-        {
-            "script": "stargate_usdc_bridge",
-            "srcChain": "POLYGON",
             "dstChain": "OPTIMISM",
             "srcToken": "USDC",
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.002,
-            "gasOnDestinationMax": 0.0025
-        },
-        {
-            "script": "inch_swap",
-            "srcChain": "OPTIMISM",
-            "dstChain": "OPTIMISM",
-            "srcToken": "USDC",
-            "dstToken": "ETH",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-        },
-    ],
-    "stargate2": [
-        {
-            "script": "inch_swap",
-            "srcChain": "OPTIMISM",
-            "dstChain": "OPTIMISM",
-            "srcToken": "ETH",
-            "dstToken": "USDC",
-            "amountPercentMin": 70, # 50%
-            "amountPercentMax": 80,
+            "gasOnDestinationMin": 0.004,
+            "gasOnDestinationMax": 0.0045
         },
         {
             "script": "stargate_usdc_bridge",
@@ -146,8 +115,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.45,
-            "gasOnDestinationMax": 0.5
+            "gasOnDestinationMin": 0.25,
+            "gasOnDestinationMax": 0.3
         },
         {
             "script": "stargate_usdc_bridge",
@@ -157,8 +126,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 7,
-            "gasOnDestinationMax": 9
+            "gasOnDestinationMin": 4,
+            "gasOnDestinationMax": 4.5
         },
         {
             "script": "stargate_usdc_bridge",
