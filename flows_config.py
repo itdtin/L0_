@@ -121,17 +121,17 @@ PROJECTS = {
         {
             "script": "stargate_usdc_bridge",
             "srcChain": "AVALANCHE",
-            "dstChain": "FANTOM",
+            "dstChain": "POLYGON",
             "srcToken": "USDC",
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 4,
-            "gasOnDestinationMax": 4.5
+            "gasOnDestinationMin": 1.3,
+            "gasOnDestinationMax": 2
         },
         {
             "script": "stargate_usdc_bridge",
-            "srcChain": "FANTOM",
+            "srcChain": "POLYGON",
             "dstChain": "ARBITRUM",
             "srcToken": "USDC",
             "dstToken": "USDC",
