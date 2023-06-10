@@ -54,9 +54,9 @@ def oft_bridge(wallet, params):
             sendFee = btcb_contract.functions.estimateSendFee(
                 dstChain.get("LZ_CHAIN_ID"), wallet.address, amount_in_wei, False, adapter_params).call()[0]
             value = w3.fromWei(sendFee, config.ETH_DECIMALS)
-            call_function(btcb_contract.functions.sendFrom, wallet, w3, value=value,
+            receipt = call_function(btcb_contract.functions.sendFrom, wallet, w3, value=value,
                     args=bridgeParams, gas_multiplicator=gas_multiplier)
-            if config.WAIT_BALANCE:
+            if receipt:
                 wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
             return True
         except TimeoutError as e:

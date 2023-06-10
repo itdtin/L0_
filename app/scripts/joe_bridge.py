@@ -73,11 +73,13 @@ def joe_bridge(wallet, params):
             sendFee = oft_contract.functions.estimateSendFee(
                 dstChain.get("LZ_CHAIN_ID"), wallet.address, amount_to_bridge_8_decimals_wei, False, adapter_params).call()[0]
             value = w3.fromWei(sendFee, config.ETH_DECIMALS)
-            call_function(oft_contract.functions.sendFrom, wallet, w3, value=value,
+            receipt = call_function(oft_contract.functions.sendFrom, wallet, w3, value=value,
                     args=bridgeParams, gas_multiplicator=gas_multiplier)
-            if config.WAIT_BALANCE:
+            if receipt:
                 wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
-            return True
+                return True
+            else:
+                return False
         except TimeoutError as e:
             logger.error(f"ERROR | Didn't receive income ")
             return False

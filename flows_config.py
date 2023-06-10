@@ -3,6 +3,7 @@ from config import *
 PROJECTS = {
     "bitcoinBridge": [
         {
+            "name": "swap_ETH_BTCB",
             "script": "trader_joe_swap",
             "srcChain": "ARBITRUM",
             "dstChain": "ARBITRUM",
@@ -12,6 +13,7 @@ PROJECTS = {
             "amountPercentMax": 56,
         },
         {
+            "name": "bridge_BTCB_ARB_OPT",
             "script": "oft_bridge",
             "srcChain": "ARBITRUM",
             "dstChain": "OPTIMISM",
@@ -19,10 +21,11 @@ PROJECTS = {
             "dstToken": "BTCB",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.002,
-            "gasOnDestinationMax": 0.0025
+            "gasOnDestinationMin": 0.001,
+            "gasOnDestinationMax": 0.0015
         },
         {
+            "name": "bridge_BTCB_OPT_ARB",
             "script": "oft_bridge",
             "srcChain": "OPTIMISM",
             "dstChain": "ARBITRUM",
@@ -34,6 +37,7 @@ PROJECTS = {
             "gasOnDestinationMax": 0
         },
         {
+            "name": "swap_BTCB_ETH",
             "script": "trader_joe_swap",
             "srcChain": "ARBITRUM",
             "dstChain": "ARBITRUM",
@@ -46,6 +50,7 @@ PROJECTS = {
 
     "traderjoe": [
         {
+            "name": "swap_ETH_JOE",
             "script": "trader_joe_swap",
             "srcChain": "ARBITRUM",
             "dstChain": "ARBITRUM",
@@ -55,6 +60,7 @@ PROJECTS = {
             "amountPercentMax": 65,
         },
         {
+            "name": "bridge_JOE_ARB_BSC",
             "script": "joe_bridge",
             "srcChain": "ARBITRUM",
             "dstChain": "BSC",
@@ -66,6 +72,7 @@ PROJECTS = {
             "gasOnDestinationMax": 0.015
         },
         {
+            "name": "bridge_JOE_BSC_ARB",
             "script": "joe_bridge",
             "srcChain": "BSC",
             "dstChain": "ARBITRUM",
@@ -77,6 +84,7 @@ PROJECTS = {
             "gasOnDestinationMax": 0
         },
         {
+            "name": "swap_JOE_ETH",
             "script": "trader_joe_swap",
             "srcChain": "ARBITRUM",
             "dstChain": "ARBITRUM",
@@ -88,6 +96,7 @@ PROJECTS = {
     ],
     "stargate" : [
         {
+            "name": "swap_ETH_USDC",
             "script": "inch_swap",
             "srcChain": "ARBITRUM",
             "dstChain": "ARBITRUM",
@@ -97,6 +106,7 @@ PROJECTS = {
             "amountPercentMax": 83,
         },
         {
+            "name": "bridge_USDC_ARB_OPT",
             "script": "stargate_usdc_bridge",
             "srcChain": "ARBITRUM",
             "dstChain": "OPTIMISM",
@@ -104,10 +114,11 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.004,
-            "gasOnDestinationMax": 0.0045
+            "gasOnDestinationMin": 0.002,
+            "gasOnDestinationMax": 0.0025
         },
         {
+            "name": "bridge_USDC_OPT_AVAX",
             "script": "stargate_usdc_bridge",
             "srcChain": "OPTIMISM",
             "dstChain": "AVALANCHE",
@@ -115,23 +126,13 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.25,
-            "gasOnDestinationMax": 0.3
+            "gasOnDestinationMin": 0.13,
+            "gasOnDestinationMax": 0.15
         },
         {
+            "name": "bridge_USDC_AVAX_ARB",
             "script": "stargate_usdc_bridge",
             "srcChain": "AVALANCHE",
-            "dstChain": "POLYGON",
-            "srcToken": "USDC",
-            "dstToken": "USDC",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-            "gasOnDestinationMin": 1.3,
-            "gasOnDestinationMax": 2
-        },
-        {
-            "script": "stargate_usdc_bridge",
-            "srcChain": "POLYGON",
             "dstChain": "ARBITRUM",
             "srcToken": "USDC",
             "dstToken": "USDC",
@@ -139,9 +140,9 @@ PROJECTS = {
             "amountPercentMax": 100,
             "gasOnDestinationMin": 0,
             "gasOnDestinationMax": 0
-
         },
         {
+            "name": "swap_USDC_ETH",
             "script": "inch_swap",
             "srcChain": "ARBITRUM",
             "dstChain": "ARBITRUM",

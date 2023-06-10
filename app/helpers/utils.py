@@ -1,5 +1,6 @@
+import json
 import requests
-
+import os
 import random
 import time
 from pathlib import Path
@@ -146,7 +147,7 @@ def wait_balance_is_changed_ETH(
             waited += wait_now
             if waited > wait_time:
                 logger.error(f"ERROR | There is no any income ETH")
-                raise TimeoutError
+                return False
         return balance_after
 
 def wait_balance_is_changed_token(
@@ -163,7 +164,7 @@ def wait_balance_is_changed_token(
             waited += wait_now
             if waited > wait_time:
                 logger.error(f"ERROR | There is no any income ETH")
-                raise TimeoutError
+                return False
         return balance_after
 
 def wait_balance_after_bridge(wallet_address, dstToken, dstChain, balance):
@@ -178,3 +179,20 @@ def wait_balance_after_bridge(wallet_address, dstToken, dstChain, balance):
         )
         balanceBefore = token.functions.balanceOf(wallet_address).call()
         wait_balance_is_changed_token(token, wallet_address, balanceBefore)
+
+
+def read_json(file_path: str):
+    if os.path.exists(file_path):
+        try:
+            with Path(file_path).open() as file:
+                return json.load(file)
+        except:
+            logger.error("INFO | File results.json doesn't exist. Creating new file")
+            write_json(file_path, {})
+            return {}
+
+def write_json(file_path: str, data: dict):
+    json_object = json.dumps(data, indent=4)
+    # Writing to sample.json
+    with Path(file_path).open('w') as outfile:
+        outfile.write(json_object)

@@ -65,7 +65,7 @@ def stargate_usdc_bridge(wallet, params):
                 "_payload": "0x"
             }
 
-            call_function(
+            receipt = call_function(
                 src_router.functions.swap,
                 wallet,
                 w3,
@@ -73,7 +73,7 @@ def stargate_usdc_bridge(wallet, params):
                 value=w3.fromWei(stargate_fee, config.ETH_DECIMALS),
                 gas_multiplicator=gas_multiplier
             )
-            if config.WAIT_BALANCE:
+            if receipt:
                 wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
             return True
         except TimeoutError as e:

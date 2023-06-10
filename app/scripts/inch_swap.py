@@ -51,10 +51,10 @@ def inch_swap(wallet, params):
             tx['gasPrice'] = int(tx['gasPrice'])
             tx['value'] = int(tx['value'])
             signed_tx = wallet.sign_transaction(tx)
-            receipt = send_raw_transaction(w3, signed_tx)
+            send_raw_transaction(w3, signed_tx)
             logger.info(f'INFO | 1inch | Successfully swaped {srcTokenAddress} => {dstTokenAddress}')
             sleep(random.randint(random.randint(5, 6), random.randint(7, 8)))
-            return receipt
+            return True
         except Exception as e:
             tryNum += 1
             slippage += 1
@@ -89,9 +89,9 @@ def approve(w3, wallet, srcAddress, chainId, amountIn):
             }
 
             signed_txn = wallet.sign_transaction(tx)
-            receipt = send_raw_transaction(w3, signed_txn)
+            send_raw_transaction(w3, signed_txn)
             logger.info(f'INFO | 1inch | Successful approved')
-            return receipt
+            return True
         except Exception as error:
             tryNum += 1
             logger.error(f'ERROR | 1inch | An error occured while approving on 1inch.\n{error}')
