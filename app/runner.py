@@ -67,12 +67,15 @@ class Runner:
         write_json(self.results_path, json_results)
 
     def run_project(self, wallet, run_args=None):
-        if not run_args:
-            run_args = {}
-        args = [wallet] + [run_args]
-        flow_ = self.scripts.get(run_args["script"])
-        if flow_:
-            return flow_(*args)
+        try:
+            if not run_args:
+                run_args = {}
+            args = [wallet] + [run_args]
+            flow_ = self.scripts.get(run_args["script"])
+            if flow_:
+                return flow_(*args)
+        except:
+            return False
 
     def import_wallets(self, file_name: str):
         accounts = []
