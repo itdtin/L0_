@@ -212,21 +212,21 @@ swap_params = {
         "BTCB": {
             "swap_in": {
                 "pairBinSteps": [10],
-                "versions": [1]
+                "versions": [2]
             },
             "swap_out": {
                 "pairBinSteps": [10],
-                "versions": [1]
+                "versions": [2]
             }
         },
         "JOE": {
             "swap_in": {
                 "pairBinSteps": [20],
-                "versions": [2]
+                "versions": [1]
             },
             "swap_out": {
-                "pairBinSteps": [20],
-                "versions": [1]
+                "pairBinSteps": [0],
+                "versions": [0]
             }
         }
     }
