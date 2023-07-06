@@ -10,7 +10,6 @@ units.update(
 )
 
 dotenv.load_dotenv()
-to_random_run = ["bitcoinBridge", "traderjoe", "stargate"]
 to_run = {
     "bitcoinBridge": {
         "swap": True,
@@ -25,6 +24,7 @@ to_run = {
         "bridge": True
     }
 }
+to_random_run = list(to_run.keys())
 
 # Wait
 WAIT_BTW_WALLET_MIN: int = 1
