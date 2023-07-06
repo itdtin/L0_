@@ -34,60 +34,59 @@ def stargate_stable_bridge(wallet, params):
     )
     dstBalanceBefore = dst_token_contract.functions.balanceOf(wallet.address).call()
 
-    # approve_result = False
-    # tryNum = 0
-    # while True:
-    #     try:
-    #         logger.info("Bridging ...")
-    #         src_router = w3.eth.contract(address=srcChain.get("STARGATE_ROUTER_ADDRESS"), abi=config.STARGATE_ROUTER_ABI)
+    approve_result = False
+    tryNum = 0
+    while True:
+        try:
+            logger.info("Bridging ...")
+            src_router = w3.eth.contract(address=srcChain.get("STARGATE_ROUTER_ADDRESS"), abi=config.STARGATE_ROUTER_ABI)
 
-    #         src_token_contract = w3.eth.contract(address=srcTokenAddress, abi=config.TOKEN_ABI)
+            src_token_contract = w3.eth.contract(address=srcTokenAddress, abi=config.TOKEN_ABI)
 
-    #         balance_wei = src_token_contract.functions.balanceOf(wallet.address).call()
-    #         random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
+            balance_wei = src_token_contract.functions.balanceOf(wallet.address).call()
+            random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
 
-    #         if not approve_result:
-    #             approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
+            if not approve_result:
+                approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
 
-    #         gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
-    #         if gas_on_destination_amount > 0:
-    #             gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
-    #         else:
-    #             gas_on_dst_wei = 0
-    #         stargate_fee = src_router.functions.quoteLayerZeroFee(
-    #                 dst_lz_chain_id, 1, dst_router_address, "0x", (0, gas_on_dst_wei, wallet.address)).call()[0]
+            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
+            if gas_on_destination_amount > 0:
+                gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
+            else:
+                gas_on_dst_wei = 0
+            stargate_fee = src_router.functions.quoteLayerZeroFee(
+                    dst_lz_chain_id, 1, dst_router_address, "0x", (0, gas_on_dst_wei, wallet.address)).call()[0]
 
-    #         swapObj = {
-    #             '_dstChainId': dst_lz_chain_id,
-    #             "_srcPoolId": srcPoolId,
-    #             "_dstPoolId": dstPoolId,
-    #             "_refundAddress": w3.toChecksumAddress(wallet.address),
-    #             "_amountLD": random_amount,
-    #             "_minAmountLD": int(random_amount * 0.95),
-    #             "_lzTxParams": (0, gas_on_dst_wei, w3.toChecksumAddress(wallet.address)),
-    #             "_to": w3.toChecksumAddress(wallet.address),
-    #             "_payload": "0x"
-    #         }
+            swapObj = {
+                '_dstChainId': dst_lz_chain_id,
+                "_srcPoolId": srcPoolId,
+                "_dstPoolId": dstPoolId,
+                "_refundAddress": w3.toChecksumAddress(wallet.address),
+                "_amountLD": random_amount,
+                "_minAmountLD": int(random_amount * 0.95),
+                "_lzTxParams": (0, gas_on_dst_wei, w3.toChecksumAddress(wallet.address)),
+                "_to": w3.toChecksumAddress(wallet.address),
+                "_payload": "0x"
+            }
 
-    #         receipt = call_function(
-    #             src_router.functions.swap,
-    #             wallet,
-    #             w3,
-    #             args=swapObj.values(),
-    #             value=w3.fromWei(stargate_fee, config.ETH_DECIMALS),
-    #             gas_multiplicator=gas_multiplier
-    #         )
-    #         if receipt:
-    #             wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
-    #         return True
-    #     except TimeoutError as e:
-    #         logger.error(f"ERROR | Didn't receive income ")
-    #         return False
-    #     except Exception as e:
-    #         tryNum += 1
-    #         logger.error(f"ERROR | while swapping - attempt {tryNum}.\n{e}")
-    #         if tryNum > config.ATTEMTS_TO_NODE_REQUEST:
-    #             logger.error(f"ERROR | while swapping.\n{e}")
-    #             return False
-    #         sleep(10)
-    return True
+            receipt = call_function(
+                src_router.functions.swap,
+                wallet,
+                w3,
+                args=swapObj.values(),
+                value=w3.fromWei(stargate_fee, config.ETH_DECIMALS),
+                gas_multiplicator=gas_multiplier
+            )
+            if receipt:
+                wait_balance_is_changed_token(dst_token_contract, wallet.address, dstBalanceBefore)
+            return True
+        except TimeoutError as e:
+            logger.error(f"ERROR | Didn't receive income ")
+            return False
+        except Exception as e:
+            tryNum += 1
+            logger.error(f"ERROR | while swapping - attempt {tryNum}.\n{e}")
+            if tryNum > config.ATTEMTS_TO_NODE_REQUEST:
+                logger.error(f"ERROR | while swapping.\n{e}")
+                return False
+            sleep(10)
