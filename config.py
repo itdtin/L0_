@@ -10,21 +10,25 @@ units.update(
 )
 
 dotenv.load_dotenv()
-to_random_run = ["bitcoinBridge", "traderjoe", "stargate"]
 to_run = {
     "bitcoinBridge": {
-        "swap": True,
-        "bridge": True
+        "swap": False,
+        "bridge": False
     },
     "traderjoe": {
-        "swap": True,
+        "swap": False,
+        "bridge": False
+    },
+    "stargate1": {
+        "swap": False,
         "bridge": True
     },
-    "stargate": {
-        "swap": True,
+    "stargate2": {
+        "swap": False,
         "bridge": True
     }
 }
+to_random_run = list(to_run.keys())
 
 # Wait
 WAIT_BTW_WALLET_MIN: int = 1
@@ -85,6 +89,7 @@ STARGATE_ROUTER_ARBI: str = "0x53Bf833A5d6c4ddA888F69c22C88C9f356a41614"
 STARGATE_ROUTER_POLYGON: str = "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd"
 STARGATE_ROUTER_FANTOM: str = "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
 STARGATER_ROUTER_AVALANCHE: str = "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd"
+STARGATE_ROUTER_BSC: str = "0x4a364f8c717caad9a442737eb7b8a55cc6cf18d8"
 
 NETWORKS = {
     "ARBITRUM": {
@@ -161,13 +166,17 @@ NETWORKS = {
         "LZ_CHAIN_ID": BSC_LZ_CHAIN_ID,
         "RPC": BSC_RPC,
         "LZ_ADAPTER_PARAMS": "0x0002000000000000000000000000000000000000000000000000000000000030d4000000000000000000000000000000000000000000000000000000000000000000",
-
+        "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_BSC,
         "BNB": {
             "address": ETH,
             "decimals": ETH_DECIMALS
         },
         "JOE": {
             "address": "0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
+            "decimals": ETH_DECIMALS
+        },
+        "USDT": {
+            "address": "0x55d398326f99059ff775485246999027b3197955",
             "decimals": ETH_DECIMALS
         }
     },
