@@ -49,7 +49,7 @@ def stargate_stable_bridge(wallet, params):
             if not approve_result:
                 approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
 
-            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
+            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin", 0), params.get("gasOnDestinationMax", 0), 10, 15)
             if gas_on_destination_amount > 0:
                 gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
             else:

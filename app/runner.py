@@ -51,7 +51,12 @@ class Runner:
                 script_name = action_params['script']
                 action_name = f"{script_name}_{action_params['srcToken']}_{action_params['srcChain']}_{action_params['dstToken']}_{action_params['dstChain']}"
                 project_title = f"{project_name}_{action_name}"
-                key = "swap" if "swap" in script_name else "bridge"
+                if "swap" in script_name:
+                    key = "swap"
+                elif "bridge" in script_name:
+                    key = "bridge"
+                elif "refuel" in script_name:
+                    key = "refuel"
                 if config.to_run[project_name].get(key):
                     if previous_flow_result and not results_for_project.get(action_name, False):
                         logger.info(f"RUNNUNIG {project_title} ...")

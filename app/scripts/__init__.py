@@ -3,6 +3,7 @@ from app.scripts.joe_bridge import joe_bridge
 from app.scripts.trader_joe_swap import trader_joe_swap
 from app.scripts.inch_swap import inch_swap
 from app.scripts.stargate_stable_bridge import stargate_stable_bridge
+from app.scripts.bungee_refuel import bungee_refuel
 
 
 
@@ -13,6 +14,7 @@ __all__ = [
     joe_bridge,
     inch_swap,
     stargate_stable_bridge,
+    bungee_refuel
 ]
 
 

@@ -139,14 +139,14 @@ def wait_balance_is_changed_ETH(
     waited = 0
     balance_after = balance_before
     if wait_increase:
-        logger.info(f"INFO |  Waiting for the ETH bridged onto destination network")
+        logger.info(f"INFO |  Waiting for the NATIVE bridged onto destination network")
         while balance_after <= balance_before:
             wait_now = random.randint(5, 20)
             sleep(wait_now)
             balance_after = w3.eth.get_balance(address)
             waited += wait_now
             if waited > wait_time:
-                logger.error(f"ERROR | There is no any income ETH")
+                logger.error(f"ERROR | There is no any income NATIVE")
                 return False
         return balance_after
 
