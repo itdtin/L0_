@@ -104,7 +104,7 @@ PROJECTS = {
             "srcToken": "ETH",
             "dstToken": "ETH",
             "amountMin": 0.001,
-            "amountMax": 0.0014, # 0.0024 is max on bungee from ARM to OPTIMISM
+            "amountMax": 0.0014, # 0.0027 is max on bungee from ARM to OPTIMISM
         },
         {
             "script": "stargate_stable_bridge",
