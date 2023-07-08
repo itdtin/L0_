@@ -182,14 +182,14 @@ def wait_balance_after_bridge(wallet_address, dstToken, dstChain, balance):
 
 
 def read_json(file_path: str):
-    if os.path.exists(file_path):
-        try:
-            with Path(file_path).open() as file:
-                return json.load(file)
-        except:
-            logger.error("INFO | File results.json doesn't exist. Creating new file")
-            write_json(file_path, {})
-            return {}
+    try:
+        with Path(file_path).open() as file:
+            return json.load(file)
+    except:
+        logger.error("INFO | File results.json doesn't exist. Creating new file")
+        write_json(file_path, {})
+        return read_json(file_path)
+
 
 def write_json(file_path: str, data: dict):
     json_object = json.dumps(data, indent=4)
