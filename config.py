@@ -20,12 +20,12 @@ to_run = {
         "bridge": False
     },
     "stargate1": {
-        "swap": False,
+        "swap": True,
         "refuel": True,
         "bridge": True
     },
     "stargate2": {
-        "swap": False,
+        "swap": True,
         "refuel": True,
         "bridge": True
     }
