@@ -1,5 +1,5 @@
 import dotenv
-from app.helpers.abis import TOKEN_ABI, JOE_ROUTER_ABI, STARGATE_ROUTER_ABI, REFUEL_ABI
+from app.helpers.abis import TOKEN_ABI, JOE_ROUTER_ABI, STARGATE_ROUTER_ABI, REFUEL_ABI, STARGATE_ETH_ROUTER_ABI
 from eth_utils.units import units, decimal
 
 units.update(
@@ -11,24 +11,15 @@ units.update(
 
 dotenv.load_dotenv()
 to_run = {
-    "bitcoinBridge": {
-        "swap": False,
+    "stargateETH": {
         "bridge": False
     },
-    "traderjoe": {
-        "swap": False,
-        "bridge": False
-    },
-    "stargate1": {
+    "stargateUSDC": {
         "swap": True,
         "refuel": True,
         "bridge": True
     },
-    "stargate2": {
-        "swap": True,
-        "refuel": True,
-        "bridge": True
-    }
+
 }
 to_random_run = list(to_run.keys())
 
@@ -70,6 +61,14 @@ ARBITRUM_RPC: str = "https://arb-mainnet.g.alchemy.com/v2/aFjqA3mR0fMDkPR8lMF2Qn
 ARBITRUM_CHAIN_ID: int = 42161
 ARBITRUM_LZ_CHAIN_ID: int = 110
 
+LINEA_RPC: str = "https://linea.blockpi.network/v1/rpc/public"
+LINEA_CHAIN_ID: int = 59144
+LINEA_LZ_CHAIN_ID: int = 183
+
+BASE_RPC: str = "https://base.publicnode.com"
+BASE_CHAIN_ID: int = 8453
+BASE_LZ_CHAIN_ID: int = 184
+
 OPTIMISM_RPC: str = "https://opt-mainnet.g.alchemy.com/v2/0K6bMED4RlCn2DPr8tKQS8XTRMcUDKFR"
 OPTIMISM_CHAIN_ID: int = 10
 OPTIMISM_LZ_CHAIN_ID: int = 111
@@ -100,16 +99,25 @@ STARGATE_ROUTER_POLYGON: str = "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd"
 STARGATE_ROUTER_FANTOM: str = "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
 STARGATER_ROUTER_AVALANCHE: str = "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd"
 STARGATE_ROUTER_BSC: str = "0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8"
+STARGATE_ROUTER_LINEA: str = "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590"
+STARGATE_ROUTER_BASE: str = "0x45f1A95A4D3f3836523F5c83673c797f4d4d263B"
+
+STARGATE_ETH_ROUTER_ARBI: str = "0xbf22f0f184bccbea268df387a49ff5238dd23e40"
+STARGATE_ETH_ROUTER_LINEA: str = "0x8731d54E9D02c286767d56ac03e8037C07e01e98"
+STARGATE_ETH_ROUTER_BASE: str = "0x50B6EbC2103BFEc165949CC946d739d5650d7ae4"
 
 NETWORKS = {
     "ARBITRUM": {
         "GAS_MULTIPLIER": 5,
+        "GAS_ETH_MULTIPLIER": 10,
+
         "CHAIN_ID": ARBITRUM_CHAIN_ID,
         "LZ_CHAIN_ID": ARBITRUM_LZ_CHAIN_ID,
         "RPC": ARBITRUM_RPC,
         "LZ_ADAPTER_PARAMS": "0x0002000000000000000000000000000000000000000000000000000000000003d0900000000000000000000000000000000000000000000000000000000000000000",
         "JOE_ROUTER_ADDRESS": ARBITRUB_JOE_SWAP_CONTRACT,
         "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_ARBI,
+        "STARGATE_ETH_ROUTER_ADDRESS": STARGATE_ETH_ROUTER_ARBI,
         "REFUEL_ADDRESS": REFUEL_ARBITRUM,
         "USDC": {
             "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -129,6 +137,39 @@ NETWORKS = {
         },
         "JOE": {
             "address": "0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
+            "decimals": ETH_DECIMALS
+        }
+    },
+    "LINEA": {
+        "GAS_MULTIPLIER": 2,
+        "GAS_ETH_MULTIPLIER": 15,
+        "CHAIN_ID": LINEA_CHAIN_ID,
+        "LZ_CHAIN_ID": LINEA_LZ_CHAIN_ID,
+        "RPC": LINEA_RPC,
+        "STARGATE_ETH_ROUTER_ADDRESS": STARGATE_ETH_ROUTER_LINEA,
+        "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_LINEA,
+        "USDC": {
+            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "decimals": USDC_DECIMALS
+        },
+        "ETH": {
+            "address": ETH,
+            "decimals": ETH_DECIMALS
+        }
+    },
+    "BASE": {
+        "GAS_MULTIPLIER": 2,
+        "CHAIN_ID": BASE_CHAIN_ID,
+        "LZ_CHAIN_ID": BASE_LZ_CHAIN_ID,
+        "RPC": BASE_RPC,
+        "STARGATE_ETH_ROUTER_ADDRESS": STARGATE_ETH_ROUTER_BASE,
+        "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_BASE,
+        "USDC": {
+            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "decimals": USDC_DECIMALS
+        },
+        "ETH": {
+            "address": ETH,
             "decimals": ETH_DECIMALS
         }
     },

@@ -34,6 +34,7 @@ def call_function(
     value=0,
     args=None,
     gas_multiplicator=None,
+    gas=None,
     tryes=config.ATTEMTS_TO_NODE_REQUEST,
 ):
     if args is None:
@@ -43,13 +44,14 @@ def call_function(
     tryNum = 0
     while True:
         gas_multiplicator += 1
-        gas = w3.eth.estimate_gas(
-            {
-                "to": Web3.toChecksumAddress(wallet.address),
-                "from": Web3.toChecksumAddress(wallet.address),
-                "value": w3.toWei(0.0001, "ether"),
-            }
-        ) + random.randint(50000, 100000)
+        if not gas:
+            gas = w3.eth.estimate_gas(
+                {
+                    "to": Web3.toChecksumAddress(wallet.address),
+                    "from": Web3.toChecksumAddress(wallet.address),
+                    "value": w3.toWei(0.0001, "ether"),
+                }
+            ) + random.randint(50000, 100000)
         gas = int(gas * gas_multiplicator)
         dict_transaction = {
             "chainId": w3.eth.chain_id,
