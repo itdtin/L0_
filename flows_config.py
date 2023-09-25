@@ -1,155 +1,74 @@
 from config import *
 # Flows
 PROJECTS = {
-    "bitcoinBridge": [
+   "stargateUSDC" : [
+        #1) USDC(arb) - USDC(Polygon) - USDT(BSC) - USDC(BASE) - USDC(arb)
         {
-            "name": "swap_ETH_BTCB",
-            "script": "trader_joe_swap",
+            "script": "stargate_stable_bridge",
             "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "ETH",
-            "dstToken": "BTCB",
-            "amountPercentMin": 45,
-            "amountPercentMax": 56,
-        },
-        {
-            "name": "bridge_BTCB_ARB_OPT",
-            "script": "oft_bridge",
-            "srcChain": "ARBITRUM",
-            "dstChain": "OPTIMISM",
-            "srcToken": "BTCB",
-            "dstToken": "BTCB",
+            "dstChain": "POLYGON",
+            "srcToken": "USDC",
+            "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.001,
-            "gasOnDestinationMax": 0.0015
+            "gasOnDestinationMin": 5.9,
+            "gasOnDestinationMax": 5.95
         },
         {
-            "name": "bridge_BTCB_OPT_ARB",
-            "script": "oft_bridge",
-            "srcChain": "OPTIMISM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "BTCB",
-            "dstToken": "BTCB",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-            "gasOnDestinationMin": 0,
-            "gasOnDestinationMax": 0
-        },
-        {
-            "name": "swap_BTCB_ETH",
-            "script": "trader_joe_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "BTCB",
-            "dstToken": "ETH",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-        },
-    ],
-
-    "traderjoe": [
-        {
-            "name": "swap_ETH_JOE",
-            "script": "trader_joe_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "ETH",
-            "dstToken": "JOE",
-            "amountPercentMin": 40,
-            "amountPercentMax": 65,
-        },
-        {
-            "name": "bridge_JOE_ARB_BSC",
-            "script": "joe_bridge",
-            "srcChain": "ARBITRUM",
+            "script": "stargate_stable_bridge",
+            "srcChain": "POLYGON",
             "dstChain": "BSC",
-            "srcToken": "JOE",
-            "dstToken": "JOE",
+            "srcToken": "USDC",
+            "dstToken": "USDT",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.01,
-            "gasOnDestinationMax": 0.015
+            "gasOnDestinationMin": 0.009,
+            "gasOnDestinationMax": 0.0091
         },
         {
-            "name": "bridge_JOE_BSC_ARB",
-            "script": "joe_bridge",
+            "script": "stargate_stable_bridge",
             "srcChain": "BSC",
+            "dstChain": "BASE",
+            "srcToken": "USDT",
+            "dstToken": "USDC",
+            "amountPercentMin": 100,
+            "amountPercentMax": 100,
+            "gasOnDestinationMin": 0.0007,
+            "gasOnDestinationMax": 0.0009
+        },
+        {
+            "script": "stargate_stable_bridge",
+            "srcChain": "BASE",
             "dstChain": "ARBITRUM",
-            "srcToken": "JOE",
-            "dstToken": "JOE",
+            "srcToken": "USDC",
+            "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
             "gasOnDestinationMin": 0,
             "gasOnDestinationMax": 0
-        },
-        {
-            "name": "swap_JOE_ETH",
-            "script": "trader_joe_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "JOE",
-            "dstToken": "ETH",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-        },
+        }
     ],
-    "stargate" : [
+    "stargateETH" : [
+        # {
+        #     "script": "stargate_eth_bridge",
+        #     "srcChain": "ARBITRUM",
+        #     "dstChain": "LINEA",
+        #     "amountPercentMin": 100,
+        #     "amountPercentMax": 100,
+        # },
         {
-            "name": "swap_ETH_USDC",
-            "script": "inch_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "ETH",
-            "dstToken": "USDC",
-            "amountPercentMin": 75, # 75%
-            "amountPercentMax": 83,
+            "script": "stargate_eth_bridge",
+            "srcChain": "LINEA",
+            "dstChain": "BASE",
+            "amountPercentMin": 99,
+            "amountPercentMax": 99,
         },
-        {
-            "name": "bridge_USDC_ARB_OPT",
-            "script": "stargate_usdc_bridge",
-            "srcChain": "ARBITRUM",
-            "dstChain": "OPTIMISM",
-            "srcToken": "USDC",
-            "dstToken": "USDC",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.002,
-            "gasOnDestinationMax": 0.0025
-        },
-        {
-            "name": "bridge_USDC_OPT_AVAX",
-            "script": "stargate_usdc_bridge",
-            "srcChain": "OPTIMISM",
-            "dstChain": "AVALANCHE",
-            "srcToken": "USDC",
-            "dstToken": "USDC",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-            "gasOnDestinationMin": 0.13,
-            "gasOnDestinationMax": 0.15
-        },
-        {
-            "name": "bridge_USDC_AVAX_ARB",
-            "script": "stargate_usdc_bridge",
-            "srcChain": "AVALANCHE",
-            "dstChain": "ARBITRUM",
-            "srcToken": "USDC",
-            "dstToken": "USDC",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-            "gasOnDestinationMin": 0,
-            "gasOnDestinationMax": 0
-        },
-        {
-            "name": "swap_USDC_ETH",
-            "script": "inch_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "USDC",
-            "dstToken": "ETH",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-        },
+        # {
+        #     "script": "stargate_eth_bridge",
+        #     "srcChain": "BASE",
+        #     "dstChain": "ARBITRUM",
+        #     "amountPercentMin": 100,
+        #     "amountPercentMax": 100,
+        # },
     ]
 }

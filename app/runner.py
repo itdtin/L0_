@@ -49,10 +49,17 @@ class Runner:
             results_for_project = results_for_wallet.get(project_name, {})
             for action_params in project_actions:
                 script_name = action_params['script']
-                action_name = action_params['name']
-                project_title = f"{project_name}_{action_params['script']}_{action_params['srcToken']}_{action_params['srcChain']}_{action_params['dstToken']}_{action_params['dstChain']}"
-                key = "swap" if "swap" in script_name else "bridge"
-                if config.to_run[project_name][key]:
+                src_token = action_params.get('srcToken', 'ETH')
+                dst_token = action_params.get('dstToken', 'ETH')
+                action_name = f"{script_name}_{src_token}_{action_params['srcChain']}_{dst_token}_{action_params['dstChain']}"
+                project_title = f"{project_name}_{action_name}"
+                if "swap" in script_name:
+                    key = "swap"
+                elif "bridge" in script_name:
+                    key = "bridge"
+                elif "refuel" in script_name:
+                    key = "refuel"
+                if config.to_run[project_name].get(key):
                     if previous_flow_result and not results_for_project.get(action_name, False):
                         logger.info(f"RUNNUNIG {project_title} ...")
                         flow_result = self.run_project(wallet, action_params)

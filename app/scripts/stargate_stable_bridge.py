@@ -6,22 +6,26 @@ from app.helpers.utils import approve, call_function, get_random_amount, wait_ba
 
 import config
 
-srcPoolId = 1
-dstPoolId = 1
+poolIds = {
+    "USDC": 1,
+    "USDT": 2
+}
 gas = 3_000_000
 
 
 
-def stargate_usdc_bridge(wallet, params):
+def stargate_stable_bridge(wallet, params):
     srcChain = config.NETWORKS.get(params.get("srcChain"))
     w3 = Web3(Web3.HTTPProvider(srcChain.get("RPC")))
     srcToken = srcChain.get(params.get("srcToken"))
     srcTokenAddress = w3.toChecksumAddress(srcToken.get("address"))
+    srcPoolId = poolIds.get(params.get("srcToken"))
     gas_multiplier = srcChain.get("GAS_MULTIPLIER")
 
     dstChain = config.NETWORKS.get(params.get("dstChain"))
     dst_lz_chain_id = dstChain.get("LZ_CHAIN_ID")
     dstToken = dstChain.get(params.get("dstToken"))
+    dstPoolId = poolIds.get(params.get("dstToken"))
     dst_router_address = w3.toChecksumAddress(dstChain.get("STARGATE_ROUTER_ADDRESS"))
     w3_dst = Web3(Web3.HTTPProvider(dstChain.get("RPC")))
     dst_token_contract = w3_dst.eth.contract(
@@ -43,9 +47,13 @@ def stargate_usdc_bridge(wallet, params):
             random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
 
             if not approve_result:
-                approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
+                allowance = src_token_contract.functions.allowance(wallet.address, src_router.address).call()
+                if allowance >= random_amount:
+                    approve_result = True
+                else:
+                    approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
 
-            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin"), params.get("gasOnDestinationMax"), 10, 15)
+            gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin", 0), params.get("gasOnDestinationMax", 0), 10, 15)
             if gas_on_destination_amount > 0:
                 gas_on_dst_wei = w3.toWei(gas_on_destination_amount, config.ETH_DECIMALS)
             else:
@@ -64,7 +72,8 @@ def stargate_usdc_bridge(wallet, params):
                 "_to": w3.toChecksumAddress(wallet.address),
                 "_payload": "0x"
             }
-
+            if params.get("srcChain") == "BASE":
+                gas = 500000
             receipt = call_function(
                 src_router.functions.swap,
                 wallet,

@@ -34,6 +34,7 @@ def call_function(
     value=0,
     args=None,
     gas_multiplicator=None,
+    gas=None,
     tryes=config.ATTEMTS_TO_NODE_REQUEST,
 ):
     if args is None:
@@ -43,13 +44,14 @@ def call_function(
     tryNum = 0
     while True:
         gas_multiplicator += 1
-        gas = w3.eth.estimate_gas(
-            {
-                "to": Web3.toChecksumAddress(wallet.address),
-                "from": Web3.toChecksumAddress(wallet.address),
-                "value": w3.toWei(0.0001, "ether"),
-            }
-        ) + random.randint(50000, 100000)
+        if not gas:
+            gas = w3.eth.estimate_gas(
+                {
+                    "to": Web3.toChecksumAddress(wallet.address),
+                    "from": Web3.toChecksumAddress(wallet.address),
+                    "value": w3.toWei(0.0001, "ether"),
+                }
+            ) + random.randint(50000, 100000)
         gas = int(gas * gas_multiplicator)
         dict_transaction = {
             "chainId": w3.eth.chain_id,
@@ -139,14 +141,14 @@ def wait_balance_is_changed_ETH(
     waited = 0
     balance_after = balance_before
     if wait_increase:
-        logger.info(f"INFO |  Waiting for the ETH bridged onto destination network")
+        logger.info(f"INFO |  Waiting for the NATIVE bridged onto destination network")
         while balance_after <= balance_before:
             wait_now = random.randint(5, 20)
             sleep(wait_now)
             balance_after = w3.eth.get_balance(address)
             waited += wait_now
             if waited > wait_time:
-                logger.error(f"ERROR | There is no any income ETH")
+                logger.error(f"ERROR | There is no any income NATIVE")
                 return False
         return balance_after
 
@@ -182,14 +184,14 @@ def wait_balance_after_bridge(wallet_address, dstToken, dstChain, balance):
 
 
 def read_json(file_path: str):
-    if os.path.exists(file_path):
-        try:
-            with Path(file_path).open() as file:
-                return json.load(file)
-        except:
-            logger.error("INFO | File results.json doesn't exist. Creating new file")
-            write_json(file_path, {})
-            return {}
+    try:
+        with Path(file_path).open() as file:
+            return json.load(file)
+    except:
+        logger.error("INFO | File results.json doesn't exist. Creating new file")
+        write_json(file_path, {})
+        return read_json(file_path)
+
 
 def write_json(file_path: str, data: dict):
     json_object = json.dumps(data, indent=4)
