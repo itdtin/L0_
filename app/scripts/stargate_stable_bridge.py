@@ -47,7 +47,11 @@ def stargate_stable_bridge(wallet, params):
             random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
 
             if not approve_result:
-                approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
+                allowance = src_token_contract.functions.allowance(wallet.address, src_router.address).call()
+                if allowance >= random_amount:
+                    approve_result = True
+                else:
+                    approve_result = approve(w3, src_token_contract, src_router.address, random_amount, wallet)
 
             gas_on_destination_amount = get_random_amount(params.get("gasOnDestinationMin", 0), params.get("gasOnDestinationMax", 0), 10, 15)
             if gas_on_destination_amount > 0:
@@ -68,7 +72,8 @@ def stargate_stable_bridge(wallet, params):
                 "_to": w3.toChecksumAddress(wallet.address),
                 "_payload": "0x"
             }
-
+            if params.get("srcChain") == "BASE":
+                gas = 500000
             receipt = call_function(
                 src_router.functions.swap,
                 wallet,

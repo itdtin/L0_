@@ -2,25 +2,7 @@ from config import *
 # Flows
 PROJECTS = {
    "stargateUSDC" : [
-        #1) USDC(arb) - USDC(opt) - USDC(pol) - USDC(ava) - USDT(bsc) - USDC(arb)
-        { #swap for this project turned off in config.py
-            "script": "inch_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "ETH",
-            "dstToken": "USDC",
-            "amountPercentMin": 75, # 75%
-            "amountPercentMax": 83,
-        },
-        {
-            "script": "bungee_refuel",
-            "srcChain": "ARBITRUM",
-            "dstChain": "POLYGON",
-            "srcToken": "ETH",
-            "dstToken": "MATIC",
-            "amountMin": 0.0014,
-            "amountMax": 0.0015, # 0.0524 is max on bungee from ARB to POLYGON
-        },
+        #1) USDC(arb) - USDC(Polygon) - USDT(BSC) - USDC(BASE) - USDC(arb)
         {
             "script": "stargate_stable_bridge",
             "srcChain": "ARBITRUM",
@@ -29,17 +11,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0,
-            "gasOnDestinationMax": 0
-        },
-        {
-            "script": "bungee_refuel",
-            "srcChain": "ARBITRUM",
-            "dstChain": "BSC",
-            "srcToken": "ETH",
-            "dstToken": "BNB",
-            "amountMin": 0.001,
-            "amountMax": 0.00139, # 0.0139 is max on bungee from ARM to BSC
+            "gasOnDestinationMin": 5.9,
+            "gasOnDestinationMax": 5.95
         },
         {
             "script": "stargate_stable_bridge",
@@ -49,17 +22,8 @@ PROJECTS = {
             "dstToken": "USDT",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0,
-            "gasOnDestinationMax": 0
-        },
-        {
-            "script": "bungee_refuel",
-            "srcChain": "ARBITRUM",
-            "dstChain": "BASE",
-            "srcToken": "ETH",
-            "dstToken": "ETH",
-            "amountMin": 0.001,
-            "amountMax": 0.00139, # 0.0139 is max on bungee from ARM to AVALANCHE
+            "gasOnDestinationMin": 0.009,
+            "gasOnDestinationMax": 0.0091
         },
         {
             "script": "stargate_stable_bridge",
@@ -69,8 +33,8 @@ PROJECTS = {
             "dstToken": "USDC",
             "amountPercentMin": 100,
             "amountPercentMax": 100,
-            "gasOnDestinationMin": 0,
-            "gasOnDestinationMax": 0
+            "gasOnDestinationMin": 0.0007,
+            "gasOnDestinationMax": 0.0009
         },
         {
             "script": "stargate_stable_bridge",
@@ -82,16 +46,7 @@ PROJECTS = {
             "amountPercentMax": 100,
             "gasOnDestinationMin": 0,
             "gasOnDestinationMax": 0
-        },
-        { #swap for this project turned off in config.py
-            "script": "inch_swap",
-            "srcChain": "ARBITRUM",
-            "dstChain": "ARBITRUM",
-            "srcToken": "USDC",
-            "dstToken": "ETH",
-            "amountPercentMin": 100,
-            "amountPercentMax": 100,
-        },
+        }
     ],
     "stargateETH" : [
         # {

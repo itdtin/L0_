@@ -15,8 +15,6 @@ to_run = {
         "bridge": False
     },
     "stargateUSDC": {
-        "swap": True,
-        "refuel": True,
         "bridge": True
     },
 
@@ -158,14 +156,14 @@ NETWORKS = {
         }
     },
     "BASE": {
-        "GAS_MULTIPLIER": 2,
+        "GAS_MULTIPLIER": 1,
         "CHAIN_ID": BASE_CHAIN_ID,
         "LZ_CHAIN_ID": BASE_LZ_CHAIN_ID,
         "RPC": BASE_RPC,
         "STARGATE_ETH_ROUTER_ADDRESS": STARGATE_ETH_ROUTER_BASE,
         "STARGATE_ROUTER_ADDRESS": STARGATE_ROUTER_BASE,
         "USDC": {
-            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "address": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
             "decimals": USDC_DECIMALS
         },
         "ETH": {
@@ -174,7 +172,7 @@ NETWORKS = {
         }
     },
     "POLYGON": {
-        "GAS_MULTIPLIER": 3,
+        "GAS_MULTIPLIER": 4,
         "CHAIN_ID": POLYGON_CHAIN_ID,
         "LZ_CHAIN_ID": POLYGON_LZ_CHAIN_ID,
         "RPC": POLYGON_RPC,
