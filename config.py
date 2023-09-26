@@ -12,7 +12,7 @@ units.update(
 dotenv.load_dotenv()
 to_run = {
     "stargateETH": {
-        "bridge": False
+        "bridge": True
     },
     "stargateUSDC": {
         "bridge": True
@@ -107,7 +107,7 @@ STARGATE_ETH_ROUTER_BASE: str = "0x50B6EbC2103BFEc165949CC946d739d5650d7ae4"
 NETWORKS = {
     "ARBITRUM": {
         "GAS_MULTIPLIER": 5,
-        "GAS_ETH_MULTIPLIER": 10,
+        "GAS_ETH_MULTIPLIER": 3,
 
         "CHAIN_ID": ARBITRUM_CHAIN_ID,
         "LZ_CHAIN_ID": ARBITRUM_LZ_CHAIN_ID,
@@ -140,7 +140,7 @@ NETWORKS = {
     },
     "LINEA": {
         "GAS_MULTIPLIER": 2,
-        "GAS_ETH_MULTIPLIER": 15,
+        "GAS_ETH_MULTIPLIER": 8,
         "CHAIN_ID": LINEA_CHAIN_ID,
         "LZ_CHAIN_ID": LINEA_LZ_CHAIN_ID,
         "RPC": LINEA_RPC,
@@ -157,6 +157,7 @@ NETWORKS = {
     },
     "BASE": {
         "GAS_MULTIPLIER": 1,
+        "GAS_ETH_MULTIPLIER": 12,
         "CHAIN_ID": BASE_CHAIN_ID,
         "LZ_CHAIN_ID": BASE_LZ_CHAIN_ID,
         "RPC": BASE_RPC,
@@ -173,6 +174,7 @@ NETWORKS = {
     },
     "POLYGON": {
         "GAS_MULTIPLIER": 4,
+        "GAS_ETH_MULTIPLIER": 11,
         "CHAIN_ID": POLYGON_CHAIN_ID,
         "LZ_CHAIN_ID": POLYGON_LZ_CHAIN_ID,
         "RPC": POLYGON_RPC,
@@ -189,6 +191,7 @@ NETWORKS = {
     },
     "OPTIMISM": {
         "GAS_MULTIPLIER": 6,
+        "GAS_ETH_MULTIPLIER": 3,
         "CHAIN_ID": OPTIMISM_CHAIN_ID,
         "LZ_CHAIN_ID": OPTIMISM_LZ_CHAIN_ID,
         "RPC": OPTIMISM_RPC,
@@ -214,6 +217,7 @@ NETWORKS = {
     },
     "BSC": {
         "GAS_MULTIPLIER": 3,
+        "GAS_ETH_MULTIPLIER": 3,
         "CHAIN_ID": BSC_CHAIN_ID,
         "LZ_CHAIN_ID": BSC_LZ_CHAIN_ID,
         "RPC": BSC_RPC,
@@ -235,6 +239,7 @@ NETWORKS = {
     },
     "AVALANCHE": {
         "GAS_MULTIPLIER": 5,
+        "GAS_ETH_MULTIPLIER": 3,
         "CHAIN_ID": AVALNCHE_CHAIN_ID,
         "LZ_CHAIN_ID": AVALANCHE_LZ_CHAIN_ID,
         "RPC": AVALANCHE_RPC,
@@ -260,6 +265,7 @@ NETWORKS = {
     },
     "FANTOM": {
         "GAS_MULTIPLIER": 6,
+        "GAS_ETH_MULTIPLIER": 3,
         "CHAIN_ID": FANTOM_CHAIN_ID,
         "LZ_CHAIN_ID": FANTOM_LZ_CHAIN_ID,
         "RPC": FANTOM_RPC,

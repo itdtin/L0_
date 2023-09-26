@@ -49,26 +49,26 @@ PROJECTS = {
         }
     ],
     "stargateETH" : [
-        # {
-        #     "script": "stargate_eth_bridge",
-        #     "srcChain": "ARBITRUM",
-        #     "dstChain": "LINEA",
-        #     "amountPercentMin": 100,
-        #     "amountPercentMax": 100,
-        # },
+        {
+            "script": "stargate_eth_bridge",
+            "srcChain": "ARBITRUM",
+            "dstChain": "LINEA",
+            "amountPercentMin": 100,
+            "amountPercentMax": 100,
+        },
         {
             "script": "stargate_eth_bridge",
             "srcChain": "LINEA",
             "dstChain": "BASE",
-            "amountPercentMin": 99,
-            "amountPercentMax": 99,
+            "amountPercentMin": 100,
+            "amountPercentMax": 100,
         },
-        # {
-        #     "script": "stargate_eth_bridge",
-        #     "srcChain": "BASE",
-        #     "dstChain": "ARBITRUM",
-        #     "amountPercentMin": 100,
-        #     "amountPercentMax": 100,
-        # },
+        {
+            "script": "stargate_eth_bridge",
+            "srcChain": "BASE",
+            "dstChain": "ARBITRUM",
+            "amountPercentMin": 100,
+            "amountPercentMax": 100,
+        },
     ]
 }
