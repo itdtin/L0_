@@ -42,9 +42,10 @@ def call_function(
     if gas_multiplicator is None:
         gas_multiplicator = 1
     tryNum = 0
+    initial_gas = gas
     while True:
         gas_multiplicator += 1
-        if not gas:
+        if not initial_gas:
             gas = w3.eth.estimate_gas(
                 {
                     "to": Web3.toChecksumAddress(wallet.address),
@@ -52,6 +53,9 @@ def call_function(
                     "value": w3.toWei(0.0001, "ether"),
                 }
             ) + random.randint(50000, 100000)
+        else:
+            gas = initial_gas
+
         gas = int(gas * gas_multiplicator)
         dict_transaction = {
             "chainId": w3.eth.chain_id,

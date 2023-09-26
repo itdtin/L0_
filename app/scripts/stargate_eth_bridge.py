@@ -17,42 +17,41 @@ def stargate_eth_bridge(wallet, params):
     dstChain = config.NETWORKS.get(params.get("dstChain"))
     dst_lz_chain_id = dstChain.get("LZ_CHAIN_ID")
     w3_dst = Web3(Web3.HTTPProvider(dstChain.get("RPC")))
-    dst_router_address = w3.toChecksumAddress(dstChain.get("STARGATE_ETH_ROUTER_ADDRESS"))
     dstBalanceBefore = w3_dst.eth.getBalance(wallet.address)
 
     tryNum = 0
     while True:
         try:
             logger.info("Bridging ...")
-            src_router = w3.eth.contract(address=srcChain.get("STARGATE_ETH_ROUTER_ADDRESS"), abi=config.STARGATE_ETH_ROUTER_ABI)
-            src_fee_quoter = w3.eth.contract(address=srcChain.get("STARGATE_ROUTER_ADDRESS"), abi=config.STARGATE_ROUTER_ABI)
+            src_router = w3.eth.contract(address=Web3.toChecksumAddress(srcChain.get("STARGATE_ETH_ROUTER_ADDRESS")), abi=config.STARGATE_ETH_ROUTER_ABI)
+            src_fee_quoter = w3.eth.contract(address=Web3.toChecksumAddress(srcChain.get("STARGATE_ROUTER_ADDRESS")), abi=config.STARGATE_ROUTER_ABI)
             balance_wei = w3.eth.get_balance(wallet.address)
-            random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 2, 3))
+
+            random_amount = int(balance_wei / 100 * get_random_amount(params["amountPercentMin"], params["amountPercentMax"], 5, 10))
             stargate_fee = src_fee_quoter.functions.quoteLayerZeroFee(
                                 dst_lz_chain_id, 1, wallet.address, "0x", (0, 0, wallet.address)).call()[0]
             gas = w3.eth.estimate_gas(
                 {
                     "to": Web3.toChecksumAddress(src_router.address),
                     "from": Web3.toChecksumAddress(wallet.address),
-                    "value": w3.toWei(0.0001, "ether"),
+                    "value": random_amount - stargate_fee,
                 }
             ) + random.randint(50000, 100000)
-            gas_wei = int(gas * gas_multiplier * w3.eth.gas_price)
-
+            gas_wei = int(gas * gas_multiplier * w3.eth.gas_price * 1.5)
+            amount_without_fee = (random_amount - stargate_fee - gas_wei)
             swapObj = {
                 '_dstChainId': dst_lz_chain_id,
                 "_refundAddress": w3.toChecksumAddress(wallet.address),
                 "_toAddress": w3.toChecksumAddress(wallet.address),
-                "_amountLD": random_amount - stargate_fee - gas_wei,
-                "_minAmountLD": int((random_amount - stargate_fee - gas_wei) * 0.95),
+                "_amountLD": amount_without_fee,
+                "_minAmountLD": int(amount_without_fee * 0.95),
             }
-
             receipt = call_function(
                 src_router.functions.swapETH,
                 wallet,
                 w3,
                 args=swapObj.values(),
-                value=w3.fromWei(random_amount, config.ETH_DECIMALS),
+                value=w3.fromWei(amount_without_fee + stargate_fee, config.ETH_DECIMALS),
                 gas_multiplicator=gas_multiplier,
                 gas=gas
             )
